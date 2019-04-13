@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    username: root
+    password: hzx12345678
+    url: jdbc:mysql://127.0.0.1:3306/news?characterEncoding=utf8&useSSL=false&serverTimezone=UTT&rewriteBatchedStatements=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  mail:
+    host: smtp.qq.com
+    username: zhuoxionghuang@qq.com
+    password: ajtgpmwajt**1
+    default-encoding: UTF-8
+    from: zhuoxionghuang@qq.com
+server:
+  tomcat:
+    uri-encoding: UTF-8
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+#默认编码配置
