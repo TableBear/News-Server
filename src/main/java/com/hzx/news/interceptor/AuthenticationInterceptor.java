@@ -30,8 +30,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         String token = null;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-//                System.out.println(cookie.getName());
-//                System.out.println(cookie.getValue());
                 if (cookie.getName().equals("token")) {
                     token = cookie.getValue();
                     break;
@@ -45,8 +43,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
         HandlerMethod handlerMethod = (HandlerMethod) object;
         Method method = handlerMethod.getMethod();
-//        System.out.println("绑定：" + method.getName());
-//        System.out.println("url:" + httpServletRequest.getRequestURL());
+        System.out.println("绑定：" + method.getName());
+        System.out.println("url:" + httpServletRequest.getRequestURL());
         //检查是否有passtoken注释，有则跳过认证
         if (method.isAnnotationPresent(PassToken.class)) {
             PassToken passToken = method.getAnnotation(PassToken.class);
@@ -62,14 +60,15 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 if (token == null) {
                     throw new RuntimeException("无token，请重新登录");
                 }
+                httpServletRequest.setAttribute("token", token);
                 // 获取 token 中的 user name
-                String uNick;
+                String uId;
                 try {
-                    uNick = JWT.decode(token).getAudience().get(0);
+                    uId = JWT.decode(token).getAudience().get(0);
                 } catch (JWTDecodeException j) {
                     throw new RuntimeException("401");
                 }
-                User user = userService.findUserByNick(uNick);
+                User user = userService.findUserByUId(uId);
                 if (user == null) {
                     throw new RuntimeException("用户不存在，请重新登录");
                 }

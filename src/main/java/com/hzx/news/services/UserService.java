@@ -20,6 +20,11 @@ public class UserService {
         return user;
     }
 
+    public User findUserByUId(String uid) {
+        User user = userMapper.queryUserByUId(uid);
+        return user;
+    }
+
     public boolean unickIsUsed(String unick) {
         int i = userMapper.queryUnickNum(unick);
         if (i > 0) {
@@ -49,7 +54,7 @@ public class UserService {
         return user;
     }
 
-    public void checkUser(User user){
+    public void checkUser(User user) {
         userMapper.updateUserStatus(user);
     }
 

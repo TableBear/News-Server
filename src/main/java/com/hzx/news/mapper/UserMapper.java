@@ -22,6 +22,9 @@ public interface UserMapper {
     @Select("SELECT * FROM `user` WHERE unick=#{unick}")
     User queryUserByNick(String unick);
 
+    @Select("SELECT * FROM `user` WHERE uid=#{uid}")
+    User queryUserByUId(String uid);
+
     @Update("UPDATE `user` SET `status`=1 WHERE unick=#{unick}")
     void updateUserStatus(User user);
 }

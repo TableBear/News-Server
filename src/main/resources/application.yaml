@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: hzx12345678
-    url: jdbc:mysql://127.0.0.1:3306/news?characterEncoding=utf8&useSSL=false&serverTimezone=UTT&rewriteBatchedStatements=true
+    url: jdbc:mysql://127.0.0.1:3306/news?characterEncoding=utf8&useSSL=false&serverTimezone=CTT&rewriteBatchedStatements=true
     driver-class-name: com.mysql.cj.jdbc.Driver
   http:
     encoding:
