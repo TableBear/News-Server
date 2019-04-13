@@ -1,7 +1,9 @@
 package com.hzx.news;
 
+import com.hzx.news.mapper.RecordMapper;
 import com.hzx.news.mapper.UserMapper;
 import com.hzx.news.mapper.NewsMapper;
+import com.hzx.news.pojo.News;
 import com.hzx.news.pojo.User;
 import com.hzx.news.utils.UUIDUtils;
 import org.junit.Test;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class NewsApplicationTests {
@@ -17,6 +21,8 @@ public class NewsApplicationTests {
     NewsMapper newsMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    RecordMapper recordMapper;
 
     @Test
     public void contextLoads() {
@@ -38,5 +44,20 @@ public class NewsApplicationTests {
         System.out.println(uuid);
     }
 
+    @Test
+    public void testRecordMApper() {
+        List<News> news = recordMapper.queryCollect("4");
+        for (News item : news) {
+            System.out.println(item.getAbstractTitle());
+        }
+        news = recordMapper.queryHistory("4");
+        for (News item : news) {
+            System.out.println(item.getAbstractTitle());
+        }
+        news = recordMapper.queryLike("4");
+        for (News item : news) {
+            System.out.println(item.getAbstractTitle());
+        }
+    }
 
 }
