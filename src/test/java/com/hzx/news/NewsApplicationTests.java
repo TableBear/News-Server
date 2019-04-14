@@ -44,7 +44,7 @@ public class NewsApplicationTests {
 //        user.setPassword("123456");
 //        int i = userMapper.saveUser(user);
 //        System.out.println(i);
-        User user = userMapper.queryUserByEmail("2390445347@qq.com");
+        User user = userMapper.queryUserByEmail("2390445347@qq.com","123456");
         System.out.println(user);
         String uuid = UUIDUtils.getUUID();
         System.out.println(uuid);

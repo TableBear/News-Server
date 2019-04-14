@@ -49,8 +49,7 @@ public class UserService {
      * @descripe 用邮箱和密码进行登录
      */
     public User loginByEmailAndPassword(String email, String password) {
-        User user = userMapper.queryUserByEmail(email);
-
+        User user = userMapper.queryUserByEmail(email, password);
         return user;
     }
 

@@ -16,8 +16,8 @@ public interface UserMapper {
     @Select("SELECT COUNT(*) FROM `user` WHERE email=#{email}")
     int queryEmailNum(String email);
 
-    @Select("SELECT * FROM `user` WHERE email=#{email}")
-    User queryUserByEmail(String email);
+    @Select("SELECT * FROM `user` WHERE email=#{email} And password=#{password}")
+    User queryUserByEmail(String email, String password);
 
     @Select("SELECT * FROM `user` WHERE unick=#{unick}")
     User queryUserByNick(String unick);
