@@ -1,9 +1,13 @@
 package com.hzx.news;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.hzx.news.mapper.NewsLogMapper;
+import com.hzx.news.mapper.NewsMapper;
 import com.hzx.news.mapper.RecordMapper;
 import com.hzx.news.mapper.UserMapper;
-import com.hzx.news.mapper.NewsMapper;
 import com.hzx.news.pojo.News;
+import com.hzx.news.pojo.OptStatus;
 import com.hzx.news.pojo.User;
 import com.hzx.news.utils.UUIDUtils;
 import org.junit.Test;
@@ -23,6 +27,8 @@ public class NewsApplicationTests {
     UserMapper userMapper;
     @Autowired
     RecordMapper recordMapper;
+    @Autowired
+    NewsLogMapper newsLogMapper;
 
     @Test
     public void contextLoads() {
@@ -58,6 +64,13 @@ public class NewsApplicationTests {
         for (News item : news) {
             System.out.println(item.getAbstractTitle());
         }
+    }
+
+    @Test
+    public void testLikeAndCollect() {
+        OptStatus likeAndCollect = newsLogMapper.queryLikeAndCollect("4", "152052019040820390921445");
+        System.out.println(likeAndCollect.getIsCollect());
+        System.out.println(likeAndCollect.getIsLike());
     }
 
 }

@@ -1,9 +1,9 @@
 package com.hzx.news.mapper;
 
+import com.hzx.news.pojo.OptStatus;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
 
@@ -25,5 +25,7 @@ public interface NewsLogMapper {
     @Insert("INSERT INTO news_log(uid,nid,is_click,last_action_time) VALUES(#{uid},#{nid},1,#{date}) ON DUPLICATE KEY UPDATE is_click=1,last_action_time=#{date}")
     int click(String uid, String nid, Date date);
 
+    @Select("SELECT is_like,is_collect FROM news_log WHERE nid=#{nid} AND uid=#{uid}")
+    OptStatus queryLikeAndCollect(String uid, String nid);
 
 }

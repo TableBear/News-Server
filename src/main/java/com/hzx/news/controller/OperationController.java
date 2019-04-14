@@ -2,6 +2,7 @@ package com.hzx.news.controller;
 
 import com.auth0.jwt.JWT;
 import com.hzx.news.annotation.UserLoginToken;
+import com.hzx.news.pojo.OptStatus;
 import com.hzx.news.services.NewsLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,5 +75,16 @@ public class OperationController {
         String uid = JWT.decode(token).getAudience().get(0);
         newsLogService.click(uid, nid, new Date());
         return "success";
+    }
+
+    @ResponseBody
+    @UserLoginToken
+    @RequestMapping(value = "status")
+    public OptStatus getStatus(@RequestParam(value = "nid") String nid,
+                                    HttpServletRequest request) {
+        String token = (String) request.getAttribute("token");
+        String uid = JWT.decode(token).getAudience().get(0);
+        OptStatus status = newsLogService.getStatus(uid, nid);
+        return status;
     }
 }

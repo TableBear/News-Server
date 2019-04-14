@@ -1,6 +1,7 @@
 package com.hzx.news.services;
 
 import com.hzx.news.mapper.NewsLogMapper;
+import com.hzx.news.pojo.OptStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,9 @@ public class NewsLogService {
         newsLogMapper.click(uid, nid, date);
     }
 
+    public OptStatus getStatus(String uid, String nid) {
+        OptStatus likeAndCollect = newsLogMapper.queryLikeAndCollect(uid, nid);
+        return likeAndCollect;
+    }
 
 }

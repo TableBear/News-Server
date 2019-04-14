@@ -25,7 +25,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
-        // 从 Cookie 中取出 token
+        // 从 Cookie 中取出 toke
         Cookie[] cookies = httpServletRequest.getCookies();
         String token = null;
         if (cookies != null) {
@@ -63,8 +63,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 httpServletRequest.setAttribute("token", token);
                 // 获取 token 中的 user name
                 String uId;
+                String uNick;
                 try {
                     uId = JWT.decode(token).getAudience().get(0);
+//                    uNick = JWT.decode(token).getAudience().get(1);
+//                    System.out.println(uNick);
                 } catch (JWTDecodeException j) {
                     throw new RuntimeException("401");
                 }

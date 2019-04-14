@@ -79,7 +79,7 @@ public class User {
 
 
     public String getToken() {
-        String token = JWT.create().withAudience("" + getUid())
+        String token = JWT.create().withAudience("" + getUid(), getUnick())
                 .sign(Algorithm.HMAC256(getPassword()));
         return token;
     }

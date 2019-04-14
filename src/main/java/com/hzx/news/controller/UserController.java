@@ -4,11 +4,11 @@ import com.hzx.news.annotation.UserLoginToken;
 import com.hzx.news.exception.EmailFormatException;
 import com.hzx.news.exception.EmailIsUsedException;
 import com.hzx.news.exception.UnickIsUsedException;
+import com.hzx.news.pojo.LoginRegisterStatus;
 import com.hzx.news.pojo.User;
 import com.hzx.news.services.MailService;
 import com.hzx.news.services.UserService;
 import com.hzx.news.utils.RegisterUtils;
-import com.hzx.news.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 
 @Controller
 @RequestMapping("user")
@@ -33,17 +32,24 @@ public class UserController {
 
     @RequestMapping(value = "register/email", method = RequestMethod.POST)
     @ResponseBody
-    public String register(@RequestParam(value = "unick") String unick,
-                           @RequestParam(value = "email") String email,
-                           @RequestParam(value = "password") String password) {
-        if (userServices.unickIsUsed(unick)) {
-            throw new UnickIsUsedException();
-        }
+    public LoginRegisterStatus register(@RequestParam(value = "unick") String unick,
+                                        @RequestParam(value = "email") String email,
+                                        @RequestParam(value = "password") String password) {
+        LoginRegisterStatus status = new LoginRegisterStatus();
         if (!RegisterUtils.checkEmailFormat(email)) {
-            throw new EmailFormatException();
+            status.setCode("400");
+            status.setInfo("邮箱格式错误！");
+            return status;
+        }
+        if (userServices.unickIsUsed(unick)) {
+            status.setCode("401");
+            status.setInfo("该昵称已被占用！");
+            return status;
         }
         if (userServices.emailIsUsed(email)) {
-            throw new EmailIsUsedException();
+            status.setCode("402");
+            status.setInfo("该邮箱已被占用！");
+            return status;
         }
         User user = new User();
         user.setUnick(unick);
@@ -52,6 +58,10 @@ public class UserController {
         int id = userServices.register(user);
         user.setUid(id);
         String token = user.getToken();
+        status.setCode("200");
+        status.setInfo("注册成功！");
+        status.setToken(token);
+        return status;
 //        String code = UUIDUtils.getUUID();
 //        uncheckUser.put(code, user);
 //        String subject = "来自News的激活邮件";
@@ -60,24 +70,30 @@ public class UserController {
 //        String context = "<a href=\"http://localhost:8080/user/checkCode?code=" + code + "\">激活请点击:" + code + "</a>";
         //发送激活邮件
 //        mailService.sendHtmlMail(user.getEmail(), subject, context);
-        return token;
     }
 
     @ResponseBody
     @RequestMapping(value = "login/email", method = RequestMethod.POST)
-    public String loginByEmail(@RequestParam(value = "email") String email,
-                               @RequestParam(value = "password") String password,
-                               HttpServletResponse response) {
+    public LoginRegisterStatus loginByEmail(@RequestParam(value = "email") String email,
+                                            @RequestParam(value = "password") String password,
+                                            HttpServletResponse response) {
+        LoginRegisterStatus status = new LoginRegisterStatus();
         if (!RegisterUtils.checkEmailFormat(email)) {
-            throw new EmailFormatException();
+            status.setCode("400");
+            status.setInfo("邮件格式错误！");
         }
         User user = userServices.loginByEmailAndPassword(email, password);
-        Cookie cookie = new Cookie("token", user.getToken());
-        response.addCookie(cookie);
         if (user != null) {
-            return user.getToken();
+            Cookie cookie = new Cookie("token", user.getToken());
+            response.addCookie(cookie);
+            status.setCode("200");
+            status.setInfo("登录成功！");
+            status.setToken(user.getToken());
+            return status;
         } else {
-            return "failed";
+            status.setCode("401");
+            status.setInfo("邮箱或密码错误！");
+            return status;
         }
     }
 
