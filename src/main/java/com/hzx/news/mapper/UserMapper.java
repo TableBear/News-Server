@@ -27,4 +27,19 @@ public interface UserMapper {
 
     @Update("UPDATE `user` SET `status`=1 WHERE unick=#{unick}")
     void updateUserStatus(User user);
+
+    @Update("UPDATE `user` SET unick=#{unick} WHERE uid=#{uid}")
+    int updateUserNick(String unick,String uid);
+
+    @Update("UPDATE `user` SET phone=#{phone} WHERE uid=#{uid}")
+    int updateUserPhone(String phone,String uid);
+
+    @Update("UPDATE `user` SET qq=#{qq} WHERE uid=#{uid}")
+    int updateUserQQ(String qq,String uid);
+
+    @Update("UPDATE `user` SET email=#{email} WHERE uid=#{uid}")
+    int updateUserEmail(String email,String uid);
+
+    @Update("UPDATE `user` SET password=#{password} WHERE uid=#{uid}")
+    int updateUserPassword(String password,String uid);
 }

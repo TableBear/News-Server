@@ -22,4 +22,7 @@ public interface NewsMapper {
     @Select("select * from news where cate=#{cate} and publish_time<#{date} order by publish_time desc limit #{limit}")
     List<News> getNewsByCateAndTime(int cate, String date, int limit);
 
+    @Select("select * from news where publish_time<#{date} order by by publish_time desc limit #{limit}")
+    List<News> getNews(String date, int limit);
+
 }

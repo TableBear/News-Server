@@ -27,7 +27,7 @@ public class NewsAPIController {
         return response;
     }
 
-    @RequestMapping("/news")
+    @RequestMapping("news")
     public Response getNewsByCateAndTime(@RequestParam(value = "cate") int cate, @RequestParam(value = "time") String time, int limit) {
         System.out.println(cate);
         String date = DateUtils.timeStamp2Date(time, "YYYY-MM-dd");
@@ -38,9 +38,16 @@ public class NewsAPIController {
     }
 
 
-    @RequestMapping("/cates")
+    @RequestMapping("cates")
     public Response getNewsCate() {
         List<Cates> list = newsServices.queryNewsCate();
+        Response response = new Response(200, "请求成功", list.size(), true, list);
+        return response;
+    }
+
+    @RequestMapping("all")
+    public Response getAllNews(@RequestParam(value = "time") String time, int limit) {
+        List<News> list = newsServices.queryNews(time, limit);
         Response response = new Response(200, "请求成功", list.size(), true, list);
         return response;
     }

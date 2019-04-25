@@ -1,10 +1,9 @@
 package com.hzx.news.controller;
 
+import com.auth0.jwt.JWT;
 import com.hzx.news.annotation.UserLoginToken;
-import com.hzx.news.exception.EmailFormatException;
-import com.hzx.news.exception.EmailIsUsedException;
-import com.hzx.news.exception.UnickIsUsedException;
 import com.hzx.news.pojo.LoginRegisterStatus;
+import com.hzx.news.pojo.UpdateStatus;
 import com.hzx.news.pojo.User;
 import com.hzx.news.services.MailService;
 import com.hzx.news.services.UserService;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -60,6 +60,7 @@ public class UserController {
         String token = user.getToken();
         status.setCode("200");
         status.setInfo("注册成功！");
+        status.setNick(user.getUnick());
         status.setToken(token);
         return status;
 //        String code = UUIDUtils.getUUID();
@@ -89,10 +90,124 @@ public class UserController {
             status.setCode("200");
             status.setInfo("登录成功！");
             status.setToken(user.getToken());
+            status.setNick(user.getUnick());
             return status;
         } else {
             status.setCode("401");
             status.setInfo("邮箱或密码错误！");
+            return status;
+        }
+    }
+
+    @ResponseBody
+    @UserLoginToken
+    @RequestMapping("info")
+    public User getUserInfo(HttpServletRequest request) {
+        String token = (String) request.getAttribute("token");
+        String uid = JWT.decode(token).getAudience().get(0);
+        User user = userServices.findUserByUId(uid);
+        return user;
+    }
+
+    @ResponseBody
+    @UserLoginToken
+    @RequestMapping("update/nick")
+    public UpdateStatus pdateUserNick(String nick, HttpServletRequest request) {
+        String token = (String) request.getAttribute("token");
+        String uid = JWT.decode(token).getAudience().get(0);
+        int i = userServices.updateUserNick(nick, uid);
+        if (i == 1) {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("200");
+            status.setInfo("昵称修改成功");
+            return status;
+        } else {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("500");
+            status.setInfo("昵称修改失败");
+            return status;
+        }
+    }
+
+    @ResponseBody
+    @UserLoginToken
+    @RequestMapping("update/phone")
+    public UpdateStatus pdateUserPhone(String phone, HttpServletRequest request) {
+        String token = (String) request.getAttribute("token");
+        String uid = JWT.decode(token).getAudience().get(0);
+        int i = userServices.updateUserPhone(phone, uid);
+        if (i == 1) {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("200");
+            status.setInfo("手机号码修改成功");
+            return status;
+        } else {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("500");
+            status.setInfo("手机号码修改失败");
+            return status;
+        }
+    }
+
+    @ResponseBody
+    @UserLoginToken
+    @RequestMapping("update/qq")
+    public UpdateStatus pdateUserQQ(String qq, HttpServletRequest request) {
+        String token = (String) request.getAttribute("token");
+        String uid = JWT.decode(token).getAudience().get(0);
+        int i = userServices.updateUserQQ(qq, uid);
+        if (i == 1) {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("200");
+            status.setInfo("QQ修改成功");
+            return status;
+        } else {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("500");
+            status.setInfo("QQ修改失败");
+            return status;
+        }
+    }
+
+    @ResponseBody
+    @UserLoginToken
+    @RequestMapping("update/email")
+    public UpdateStatus pdateUserEmail(String email, HttpServletRequest request) {
+        String token = (String) request.getAttribute("token");
+        String uid = JWT.decode(token).getAudience().get(0);
+        int i = userServices.updateUserEmail(email, uid);
+        if (i == 1) {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("200");
+            status.setInfo("邮箱修改成功");
+            return status;
+        } else {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("500");
+            status.setInfo("邮箱修改失败");
+            return status;
+        }
+    }
+
+    @ResponseBody
+    @UserLoginToken
+    @RequestMapping("update/password")
+    public UpdateStatus updateUserPassword(String password, HttpServletRequest request) {
+        String token = (String) request.getAttribute("token");
+        String uid = JWT.decode(token).getAudience().get(0);
+        int i = userServices.updateUserPassword(password, uid);
+        if (i == 1) {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("200");
+            User user = userServices.findUserByUId(uid);
+            if (user != null) {
+                status.setInfo(user.getToken());
+            }
+            return status;
+        } else {
+            UpdateStatus status = new UpdateStatus();
+            status.setCode("500");
+            status.setInfo("密码修改失败");
             return status;
         }
     }

@@ -4,6 +4,15 @@ public class LoginRegisterStatus {
     private String code;
     private String info;
     private String token;
+    private String nick;
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
 
     public String getCode() {
         return code;

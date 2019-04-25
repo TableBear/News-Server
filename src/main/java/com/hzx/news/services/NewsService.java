@@ -28,5 +28,8 @@ public class NewsService {
         return list;
     }
 
-
+    public List<News> queryNews(String date, int limit) {
+        List<News> list = newsMapper.getNews(date, limit);
+        return list;
+    }
 }

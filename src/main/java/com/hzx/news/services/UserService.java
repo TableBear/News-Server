@@ -57,4 +57,28 @@ public class UserService {
         userMapper.updateUserStatus(user);
     }
 
+    public int updateUserNick(String nick, String uid) {
+        int i = userMapper.updateUserNick(nick, uid);
+        return i;
+    }
+
+    public int updateUserPhone(String phone, String uid) {
+        int i = userMapper.updateUserPhone(phone, uid);
+        return i;
+    }
+
+    public int updateUserQQ(String qq, String uid) {
+        int i = userMapper.updateUserQQ(qq, uid);
+        return i;
+    }
+
+    public int updateUserEmail(String email, String uid) {
+        int i = userMapper.updateUserEmail(email, uid);
+        return i;
+    }
+
+    public int updateUserPassword(String password, String uid) {
+        int i = userMapper.updateUserPassword(password, uid);
+        return i;
+    }
 }
