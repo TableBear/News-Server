@@ -12,9 +12,12 @@ spring:
   mail:
     host: smtp.qq.com
     username: zhuoxionghuang@qq.com
-    password: ajtgpmwajt**1
+    password: zosjqhvcrvxqebch
     default-encoding: UTF-8
     from: zhuoxionghuang@qq.com
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 server:
   tomcat:
     uri-encoding: UTF-8

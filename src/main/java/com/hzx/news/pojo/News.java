@@ -4,18 +4,18 @@ package com.hzx.news.pojo;
 public class News {
 
     private String nid;
-    private long articleType;
+    private int articleType;
     private String abstractTitle;
     private String title;
     private String articleUrl;
     private java.sql.Timestamp crawlTime;
     private String keywords;
-    private String cate;
+    private int cate;
     private java.sql.Timestamp publishTime;
     private String author;
     private String coverImageUrl;
-    private long hasVideo;
-    private long hasImage;
+    private boolean hasVideo;
+    private boolean hasImage;
     private long favoriteCount;
     private long commentsCount;
     private String content;
@@ -30,11 +30,11 @@ public class News {
     }
 
 
-    public long getArticleType() {
+    public int getArticleType() {
         return articleType;
     }
 
-    public void setArticleType(long articleType) {
+    public void setArticleType(int articleType) {
         this.articleType = articleType;
     }
 
@@ -84,11 +84,11 @@ public class News {
     }
 
 
-    public String getCate() {
+    public int getCate() {
         return cate;
     }
 
-    public void setCate(String cate) {
+    public void setCate(int cate) {
         this.cate = cate;
     }
 
@@ -120,20 +120,20 @@ public class News {
     }
 
 
-    public long getHasVideo() {
+    public boolean getHasVideo() {
         return hasVideo;
     }
 
-    public void setHasVideo(long hasVideo) {
+    public void setHasVideo(boolean hasVideo) {
         this.hasVideo = hasVideo;
     }
 
 
-    public long getHasImage() {
+    public boolean getHasImage() {
         return hasImage;
     }
 
-    public void setHasImage(long hasImage) {
+    public void setHasImage(boolean hasImage) {
         this.hasImage = hasImage;
     }
 

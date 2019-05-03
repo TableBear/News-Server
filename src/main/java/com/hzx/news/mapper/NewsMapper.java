@@ -13,16 +13,18 @@ public interface NewsMapper {
      * @param cate
      * @return a list of news
      */
-    @Select("select * from news where cate=#{cate} order by publish_time desc limit 10")
+    @Select("select * FROM news where cate=#{cate} order by publish_time desc limit 10")
     List<News> getNewsByCate(int cate);
 
-    @Select("select * from cates")
+    @Select("select * FROM cates")
     List<Cates> getNewsCate();
 
-    @Select("select * from news where cate=#{cate} and publish_time<#{date} order by publish_time desc limit #{limit}")
+    @Select("select * FROM news where cate=#{cate} and publish_time<#{date} order by publish_time desc limit #{limit}")
     List<News> getNewsByCateAndTime(int cate, String date, int limit);
 
-    @Select("select * from news where publish_time<#{date} order by by publish_time desc limit #{limit}")
+    @Select("select * FROM news where publish_time<#{date} order by by publish_time desc limit #{limit}")
     List<News> getNews(String date, int limit);
 
+    @Select("SELECT * FROM news LIMIT #{offest},#{limit}")
+    List<News> getAllNews(int offest, int limit);
 }

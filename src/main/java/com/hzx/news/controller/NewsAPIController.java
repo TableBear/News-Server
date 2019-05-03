@@ -45,9 +45,16 @@ public class NewsAPIController {
         return response;
     }
 
-    @RequestMapping("all")
+    @RequestMapping("all-time")
     public Response getAllNews(@RequestParam(value = "time") String time, int limit) {
-        List<News> list = newsServices.queryNews(time, limit);
+        List<News> list = newsServices.queryAllNewsByTime(time, limit);
+        Response response = new Response(200, "请求成功", list.size(), true, list);
+        return response;
+    }
+
+    @RequestMapping("all-offest")
+    public Response getAllNewsByOffest(int limit, int offest) {
+        List<News> list = newsServices.queryAllNewsByOffest(offest, limit);
         Response response = new Response(200, "请求成功", list.size(), true, list);
         return response;
     }
