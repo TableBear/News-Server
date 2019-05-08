@@ -46,7 +46,7 @@ public class NewsAPIController {
     }
 
     @RequestMapping("all-time")
-    public Response getAllNews(@RequestParam(value = "time") String time, int limit) {
+    public Response getAllNewsByTime(@RequestParam(value = "time") String time, int limit) {
         List<News> list = newsServices.queryAllNewsByTime(time, limit);
         Response response = new Response(200, "请求成功", list.size(), true, list);
         return response;
