@@ -26,5 +26,8 @@ public interface NewsMapper {
     List<News> getNews(String date, int limit);
 
     @Select("SELECT * FROM news LIMIT #{offest},#{limit}")
-    List<News> getAllNews(int offest, int limit);
+    List<News> getNewsByOffest(int offest, int limit);
+
+    @Select("SELECT * FROM news")
+    List<News> getAllNews();
 }

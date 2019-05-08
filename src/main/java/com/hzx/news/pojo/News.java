@@ -1,23 +1,45 @@
 package com.hzx.news.pojo;
 
 
-public class News {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
+@Document(indexName = "news", type = "news", shards = 1, replicas = 0)
+public class News {
+    @Id
+    @Field(type = FieldType.Text)
     private String nid;
+    @Field(type = FieldType.Integer)
     private int articleType;
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String abstractTitle;
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String title;
+    @Field(type = FieldType.Text, index = false)
     private String articleUrl;
+    @Field(type = FieldType.Date)
     private java.sql.Timestamp crawlTime;
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String keywords;
+    @Field(type = FieldType.Integer)
     private int cate;
+    @Field(type = FieldType.Date)
     private java.sql.Timestamp publishTime;
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String author;
+    @Field(type = FieldType.Text, index = false)
     private String coverImageUrl;
+    @Field(type = FieldType.Boolean)
     private boolean hasVideo;
+    @Field(type = FieldType.Boolean)
     private boolean hasImage;
+    @Field(type = FieldType.Long)
     private long favoriteCount;
+    @Field(type = FieldType.Long)
     private long commentsCount;
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String content;
 
 

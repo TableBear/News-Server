@@ -68,9 +68,9 @@ public class NewsApplicationTests {
 
     @Test
     public void testLikeAndCollect() {
-        OptStatus likeAndCollect = newsLogMapper.queryLikeAndCollect("4", "152052019040820390921445");
-        System.out.println(likeAndCollect.getIsCollect());
-        System.out.println(likeAndCollect.getIsLike());
+//        OptStatus likeAndCollect = newsLogMapper.queryLikeAndCollect("4", "152052019040820390921445");
+//        System.out.println(likeAndCollect.getIsCollect());
+//        System.out.println(likeAndCollect.getIsLike());
     }
 
 }

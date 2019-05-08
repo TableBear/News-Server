@@ -15,6 +15,12 @@ spring:
     password: zosjqhvcrvxqebch
     default-encoding: UTF-8
     from: zhuoxionghuang@qq.com
+  data:
+    elasticsearch:
+      cluster-name: my-application
+      cluster-nodes: localhost:9300
+      repositories:
+        enabled: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

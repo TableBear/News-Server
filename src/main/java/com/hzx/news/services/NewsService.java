@@ -34,7 +34,12 @@ public class NewsService {
     }
 
     public List<News> queryAllNewsByOffest(int offest, int limit) {
-        List<News> list = newsMapper.getAllNews(offest, limit);
+        List<News> list = newsMapper.getNewsByOffest(offest, limit);
+        return list;
+    }
+
+    public List<News> queryAllNews() {
+        List<News> list = newsMapper.getAllNews();
         return list;
     }
 }

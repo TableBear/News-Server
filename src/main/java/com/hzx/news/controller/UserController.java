@@ -106,7 +106,7 @@ public class UserController {
         String token = (String) request.getAttribute("token");
         String uid = JWT.decode(token).getAudience().get(0);
         User user = userServices.findUserByUId(uid);
-        user.setPassword("");
+        user.setPassword("******");
         return user;
     }
 
